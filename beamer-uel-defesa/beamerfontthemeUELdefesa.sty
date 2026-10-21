@@ -1,0 +1,82 @@
+% Font theme for the UEL defense beamer theme (XeLaTeX / LuaLaTeX only).
+% Per the identity manual: Faustina for titles and subtitles, Lato for running
+% text. Faustina is looked up in the directories given by the `fontpath`
+% theme option, then in fonts/ and ../fonts/, and finally among the installed
+% system fonts. Penguin is reserved for the logotype and is never used here.
+\ProvidesPackage{beamerfontthemeUELdefesa}[2026/10/21 UEL defense font theme]
+\mode<presentation>
+
+\RequirePackage{iftex}
+\ifPDFTeX
+  \PackageError{beamerfontthemeUELdefesa}{The UEL theme needs XeLaTeX or LuaLaTeX}
+    {Compile with xelatex or lualatex (or `latexmk`, see latexmkrc).}
+\fi
+\RequirePackage{fontspec}
+
+% --- Faustina (titles) --------------------------------------------------
+\providecommand*\uel@fontpath{fonts/}
+\def\uel@fontdir{}
+\@for\uel@dir:=\uel@fontpath,fonts/,../fonts/\do{%
+  \ifx\uel@fontdir\@empty
+    \IfFileExists{\uel@dir Faustina-Regular.ttf}{\edef\uel@fontdir{\uel@dir}}{}%
+  \fi}
+
+\ifx\uel@fontdir\@empty
+  \IfFontExistsTF{Faustina}{%
+    \PackageWarning{beamerfontthemeUELdefesa}{Bundled Faustina not found; using the
+      system font (only one weight)}%
+    \newfontfamily\uelserif{Faustina}%
+    \newfontfamily\uelserifmd{Faustina}%
+    \newfontfamily\uelserifsb{Faustina}%
+  }{%
+    \PackageWarning{beamerfontthemeUELdefesa}{Faustina not found; titles fall back to
+      the default serif font. Copy the fonts/ directory next to your document
+      or set the `fontpath' option}%
+    \newfontfamily\uelserif{Latin Modern Roman}%
+    \newfontfamily\uelserifmd{Latin Modern Roman}%
+    \newfontfamily\uelserifsb{Latin Modern Roman}%
+  }%
+\else
+  \newfontfamily\uelserif[Path=\uel@fontdir,Extension=.ttf,
+    UprightFont=*-Regular,ItalicFont=*-RegularItalic,
+    BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]{Faustina}
+  \newfontfamily\uelserifmd[Path=\uel@fontdir,Extension=.ttf,
+    UprightFont=*-Medium,ItalicFont=*-MediumItalic,
+    BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]{Faustina}
+  \newfontfamily\uelserifsb[Path=\uel@fontdir,Extension=.ttf,
+    UprightFont=*-SemiBold,ItalicFont=*-SemiBoldItalic,
+    BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]{Faustina}
+\fi
+
+% --- Lato (running text) ------------------------------------------------
+\IfFontExistsTF{Lato}{%
+  \setmainfont{Lato}%
+  \setsansfont{Lato}%
+}{%
+  \PackageWarning{beamerfontthemeUELdefesa}{Lato not found; install it from
+    https://fonts.google.com/specimen/Lato. Using Latin Modern Sans}%
+  \setmainfont{Latin Modern Sans}%
+  \setsansfont{Latin Modern Sans}%
+}
+
+\usefonttheme{professionalfonts}
+
+\setbeamerfont{normal text}{family=\sffamily}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{title}{family=\uelserifsb,size=\LARGE}
+\setbeamerfont{subtitle}{family=\uelserifmd,size=\normalsize}
+\setbeamerfont{author}{family=\sffamily,series=\bfseries,size=\normalsize}
+\setbeamerfont{info}{family=\sffamily,size=\footnotesize}
+\setbeamerfont{frametitle}{family=\uelserifsb,size=\large}
+\setbeamerfont{framesubtitle}{family=\uelserifmd,size=\footnotesize}
+\setbeamerfont{thanks}{family=\uelserifsb,size=\LARGE}
+\setbeamerfont{block title}{family=\uelserifsb,size=\small}
+\setbeamerfont{block body}{size=\small}
+\setbeamerfont{footline}{family=\sffamily,size=\fontsize{6.5}{8}}
+\setbeamerfont{caption}{size=\footnotesize}
+\setbeamerfont{footnote}{size=\tiny}
+\setbeamerfont{bibliography entry author}{size=\footnotesize}
+\setbeamerfont{bibliography entry title}{size=\footnotesize}
+\setbeamerfont{bibliography entry note}{size=\footnotesize}
+
+\mode<all>

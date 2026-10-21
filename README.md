@@ -8,6 +8,7 @@ following the [manual de identidade visual](docs/identitymanual.pdf).
 | Template | Description |
 |---|---|
 | [`beamer-uel`](beamer-uel/) | Compact 16:9 slides with UEL and DC logos |
+| [`beamer-uel-defesa`](beamer-uel-defesa/) | Light 16:9 slides for TCC defenses, with progress bar |
 
 ![beamer-uel title slide](beamer-uel/previews/title.png)
 

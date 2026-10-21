@@ -1,0 +1,46 @@
+% Color theme for the UEL defense beamer theme (same palette as beamer-uel).
+% Verde UEL (#00753B) and Preto come from the "Manual de identidade visual da
+% UEL"; the blues and greys come from the Departamento de Computação logo.
+% The dark green and the tints are derived from Verde UEL.
+\ProvidesPackage{beamercolorthemeUELdefesa}[2026/10/21 UEL defense color theme]
+\mode<presentation>
+
+\definecolor{uelgreen}{HTML}{00753B}
+\definecolor{uelgreendark}{HTML}{004B26}
+\definecolor{uelblack}{HTML}{000000}
+\definecolor{dcblue}{HTML}{3777BB}
+\definecolor{dcbluelight}{HTML}{659AD1}
+\definecolor{dcgrey}{HTML}{8D9EA6}
+\definecolor{dcgreydark}{HTML}{555D60}
+\colorlet{uelgreentint}{uelgreen!7!white}
+\colorlet{dcbluetint}{dcblue!8!white}
+
+\setbeamercolor{normal text}{fg=uelblack,bg=white}
+\setbeamercolor{structure}{fg=uelgreen}
+\setbeamercolor{alerted text}{fg=dcblue}
+\setbeamercolor{example text}{fg=dcblue}
+\setbeamercolor{palette primary}{fg=white,bg=uelgreen}
+
+\setbeamercolor{title}{fg=uelgreen}
+\setbeamercolor{subtitle}{fg=dcgreydark}
+\setbeamercolor{thanks}{fg=uelgreen}
+\setbeamercolor{frametitle}{fg=uelgreen}
+\setbeamercolor{framesubtitle}{fg=dcgreydark}
+\setbeamercolor{footline}{fg=dcgreydark}
+
+\setbeamercolor{block title}{fg=white,bg=uelgreen}
+\setbeamercolor{block body}{fg=uelblack,bg=uelgreentint}
+\setbeamercolor{block title alerted}{fg=white,bg=dcgreydark}
+\setbeamercolor{block body alerted}{fg=uelblack,bg=black!6!white}
+\setbeamercolor{block title example}{fg=white,bg=dcblue}
+\setbeamercolor{block body example}{fg=uelblack,bg=dcbluetint}
+
+\setbeamercolor{item}{fg=uelgreen}
+\setbeamercolor{caption name}{fg=uelgreen}
+\setbeamercolor{bibliography entry author}{fg=uelblack}
+\setbeamercolor{bibliography entry title}{fg=uelblack}
+\setbeamercolor{bibliography entry note}{fg=dcgreydark}
+\setbeamercolor{footnote}{fg=dcgreydark}
+\hypersetup{colorlinks=true,linkcolor=,urlcolor=dcblue,citecolor=dcblue}
+
+\mode<all>

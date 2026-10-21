@@ -1,0 +1,80 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[brazil]{babel}
+
+\usetheme{UELdefesa}
+
+\title[Título curto]{Título do trabalho de conclusão de curso}
+\subtitle{Subtítulo, se houver}
+\author[Nome do Autor]{Nome do Autor}
+\orientador{Prof. Dr. Nome do Orientador}
+\banca{Prof. Dr. Nome do Membro 2\\Profa. Dra. Nome do Membro 3}
+\curso{Ciência da Computação}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\section{Introdução}
+
+\begin{frame}{Motivação}{O problema e por que importa}
+  \begin{itemize}
+    \item Contexto do problema
+    \item Lacuna identificada na literatura
+    \item Contribuição deste trabalho
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Objetivos}
+  \begin{block}{Objetivo geral}
+    Uma frase que resume o que o trabalho pretende alcançar.
+  \end{block}
+  \begin{enumerate}
+    \item Objetivo específico um
+    \item Objetivo específico dois
+  \end{enumerate}
+\end{frame}
+
+\section{Método}
+
+\begin{frame}{Abordagem}
+  \begin{itemize}
+    \item Etapa 1: \alert{coleta} dos dados
+    \item Etapa 2: implementação
+    \item Etapa 3: avaliação
+  \end{itemize}
+\end{frame}
+
+\section{Resultados}
+
+\begin{frame}{Resultados}
+  \centering
+  \begin{tabular}{lrr}
+    \hline
+    Método & Precisão & Tempo (s) \\ \hline
+    Linha de base & 0,81 & 12,4 \\
+    Proposto & 0,89 & 9,7 \\ \hline
+  \end{tabular}
+  \par\medskip
+  \begin{exampleblock}{Destaque}
+    O método proposto melhora a precisão em 8 pontos percentuais.
+  \end{exampleblock}
+\end{frame}
+
+\section{Conclusão}
+
+\begin{frame}{Conclusões e trabalhos futuros}
+  \begin{itemize}
+    \item O que foi alcançado
+    \item Limitações
+    \item Próximos passos
+  \end{itemize}
+\end{frame}
+
+\obrigado[nome.autor@exemplo.uel.br]
+
+\end{document}
