@@ -1,24 +1,25 @@
 # beamer-uel
 
-Compact 16:9 Beamer theme for the Universidade Estadual de Londrina, with the
-Departamento de Computação (DC) logo. Written for 10pt text.
+Tema Beamer compacto, em 16:9, para a Universidade Estadual de Londrina, com o
+logotipo do Departamento de Computação (DC). Feito para texto em 10pt.
 
-| Title slide | Content slide |
+| Slide de título | Slide de conteúdo |
 |---|---|
-| ![Title slide](previews/title.png) | ![Blocks slide](previews/blocos.png) |
+| ![Slide de título](previews/title.png) | ![Slide de blocos](previews/blocos.png) |
 
-Colours: Verde UEL for structure, DC blue for emphasis, examples and links.
-Type: Faustina for titles and Lato for body text, as in the identity manual.
+Cores: Verde UEL na estrutura e azul do DC em ênfases, exemplos e links.
+Tipografia: Faustina nos títulos e Lato no texto, como no manual de identidade
+visual.
 
-## Usage
+## Uso
 
-Requires **XeLaTeX or LuaLaTeX**. Lato must be installed
-([Google Fonts](https://fonts.google.com/specimen/Lato)); Faustina is bundled in
-`../fonts/` (SIL OFL, see `../fonts/OFL.txt`).
+Requer **XeLaTeX ou LuaLaTeX**. A Lato precisa estar instalada
+([Google Fonts](https://fonts.google.com/specimen/Lato)); a Faustina já está
+incluída em `../fonts/` (SIL OFL, veja `../fonts/OFL.txt`).
 
 ```sh
 cd beamer-uel
-latexmk exemplo.tex      # builds exemplo.pdf with XeLaTeX
+latexmk exemplo.tex      # gera exemplo.pdf com XeLaTeX
 ```
 
 ```latex
@@ -26,17 +27,20 @@ latexmk exemplo.tex      # builds exemplo.pdf with XeLaTeX
 \usetheme{UEL}
 ```
 
-The theme looks for `fonts/` and `img/logos/pdf/` in the document's directory
-and its parent. To use it elsewhere, copy the three `.sty` files and those two
-directories next to your `.tex`, or point to them with the options below.
+O tema procura `fonts/` e `img/logos/pdf/` na pasta do documento e na pasta acima
+dela. Para usá-lo em outro lugar, copie os três arquivos `.sty` e essas duas
+pastas para junto do seu `.tex`, ou aponte para elas com as opções abaixo.
 
-| Option | Effect |
+| Opção | Efeito |
 |---|---|
-| `fontpath=<dir>` | directory with the Faustina `.ttf` files |
-| `logopath=<dir>` | directory with the logo PDFs |
-| `nodc` | leave out the DC logo (plain UEL slides) |
-| `nowatermark` | no translucent symbol on title and section slides |
-| `nosectionpage` | no automatic divider slide at each `\section` |
+| `fontpath=<pasta>` | pasta com os arquivos `.ttf` da Faustina |
+| `logopath=<pasta>` | pasta com os PDFs dos logotipos |
+| `nodc` | omite o logotipo do DC (slides apenas da UEL) |
+| `nowatermark` | sem o símbolo translúcido nos slides de título e de seção |
+| `nosectionpage` | sem o slide separador automático em cada `\section` |
 
-Use `\maketitle` for the title slide. Set short forms for the footer with
-`\title[short]{...}` and `\author[short]{...}`.
+Use `\maketitle` para o slide de título. Defina as formas curtas do rodapé com
+`\title[curto]{...}` e `\author[curto]{...}`.
+
+Para um guia completo de como montar uma apresentação, veja o
+[README principal](../README.md).

@@ -1,26 +1,27 @@
 # beamer-uel-defesa
 
-Beamer theme for thesis (TCC) defenses at the Universidade Estadual de Londrina,
-with the Departamento de Computação (DC) logo. Light and quiet, with a progress
-bar above the footer to keep track of the time. Written for 10pt, 16:9.
+Tema Beamer para defesas de TCC na Universidade Estadual de Londrina, com o
+logotipo do Departamento de Computação (DC). Claro e discreto, com uma barra de
+progresso acima do rodapé para acompanhar o tempo. Feito para 10pt, em 16:9.
 
-| Title slide | Content slide |
+| Slide de título | Slide de conteúdo |
 |---|---|
-| ![Title slide](previews/title.png) | ![Results slide](previews/resultados.png) |
+| ![Slide de título](previews/title.png) | ![Slide de resultados](previews/resultados.png) |
 
-Same palette and fonts as [`beamer-uel`](../beamer-uel/) (Verde UEL, DC blue,
-Faustina and Lato), but white slides, a narrow green stripe, no section divider
-slides, and defense-specific title and closing slides.
+Mesma paleta e mesmas fontes do [`beamer-uel`](../beamer-uel/) (Verde UEL, azul do
+DC, Faustina e Lato), mas com slides brancos, uma faixa verde estreita, sem
+slides separadores de seção e com slides de título e de encerramento próprios
+para defesas.
 
-## Usage
+## Uso
 
-Requires **XeLaTeX or LuaLaTeX**. Lato must be installed
-([Google Fonts](https://fonts.google.com/specimen/Lato)); Faustina is bundled in
-`../fonts/`.
+Requer **XeLaTeX ou LuaLaTeX**. A Lato precisa estar instalada
+([Google Fonts](https://fonts.google.com/specimen/Lato)); a Faustina já está
+incluída em `../fonts/`.
 
 ```sh
 cd beamer-uel-defesa
-latexmk exemplo.tex      # builds exemplo.pdf with XeLaTeX
+latexmk exemplo.tex      # gera exemplo.pdf com XeLaTeX
 ```
 
 ```latex
@@ -42,22 +43,25 @@ latexmk exemplo.tex      # builds exemplo.pdf with XeLaTeX
 \end{document}
 ```
 
-| Command | Effect |
+| Comando | Efeito |
 |---|---|
-| `\orientador{…}`, `\banca{…}` | advisor and board on the title slide (`\\` between names) |
-| `\curso{…}`, `\tipotrabalho{…}`, `\local{…}` | course, type of work (default *Trabalho de Conclusão de Curso*), place (default Londrina) |
-| `\obrigado[contact]` | closing slide with an optional contact line |
+| `\orientador{…}`, `\banca{…}` | orientador e banca no slide de título (`\\` entre os nomes) |
+| `\curso{…}`, `\tipotrabalho{…}`, `\local{…}` | curso, tipo de trabalho (padrão *Trabalho de Conclusão de Curso*) e local (padrão Londrina) |
+| `\obrigado[contato]` | slide de encerramento com uma linha de contato opcional |
 
-The progress bar counts the frames between the title and closing slides.
-Set short forms for the footer with `\title[short]{…}` and `\author[short]{…}`.
+A barra de progresso conta os frames entre o slide de título e o de encerramento.
+Defina as formas curtas do rodapé com `\title[curto]{…}` e `\author[curto]{…}`.
 
-| Option | Effect |
+| Opção | Efeito |
 |---|---|
-| `fontpath=<dir>` | directory with the Faustina `.ttf` files |
-| `logopath=<dir>` | directory with the logo PDFs |
-| `nodc` | leave out the DC logo (plain UEL slides) |
-| `noprogress` | no progress bar |
+| `fontpath=<pasta>` | pasta com os arquivos `.ttf` da Faustina |
+| `logopath=<pasta>` | pasta com os PDFs dos logotipos |
+| `nodc` | omite o logotipo do DC (slides apenas da UEL) |
+| `noprogress` | sem a barra de progresso |
 
-The theme looks for `fonts/` and `img/logos/pdf/` in the document's directory
-and its parent. To use it elsewhere, copy the three `.sty` files and those two
-directories next to your `.tex`.
+O tema procura `fonts/` e `img/logos/pdf/` na pasta do documento e na pasta acima
+dela. Para usá-lo em outro lugar, copie os três arquivos `.sty` e essas duas
+pastas para junto do seu `.tex`.
+
+Para um guia completo de como montar uma apresentação, veja o
+[README principal](../README.md).
