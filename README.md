@@ -142,6 +142,7 @@ Cada tipo tem comandos próprios, descritos no README da sua pasta:
 
 | Pasta | Comandos próprios |
 |---|---|
+| `geral` | `\obrigado` |
 | `aula` | `\disciplina`, `\aula`, `\semestre`; ambientes `theorem`, `definition`, `exercicio`; listagens de código. Use `brazil` também como opção da classe para os nomes em português |
 | `defesa` | `\orientador`, `\banca`, `\curso`, `\obrigado` |
 | `evento` | `\evento`, `\datalocal`, `\palestrante`, `\apoio`, `\obrigado` |

@@ -9,6 +9,8 @@
 %   nodc              leave out the DC logo (plain UEL slides)
 %   nowatermark       no faint symbol on the title and section slides
 %   nosectionpage     no automatic divider slide at each \section
+%
+% Closing slide: \obrigado[line]
 \ProvidesPackage{beamerthemeUELdark}[2026/10/21 UEL dark beamer theme]
 \mode<presentation>
 
@@ -191,6 +193,34 @@
       \sectionpage
     \end{frame}}
 \fi
+
+% --- Closing slide -------------------------------------------------------------
+% \obrigado[line]: a green page like the section dividers with "Obrigado!" and
+% an optional second line (for example "Perguntas?" or a contact e-mail).
+\newcommand*\obrigado[1][]{%
+  \begin{frame}[plain,noframenumbering]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[uelgreen] (current page.south west) rectangle (current page.north east);
+      % The watermark is clipped to the page, as on the section divider. It goes
+      % through the \uel@watermark helper: a bare \ifuel@watermark inside the
+      % frame body breaks beamer's frame scanning.
+      \begin{scope}
+        \clip (current page.south west) rectangle (current page.north east);
+        \uel@watermark
+      \end{scope}
+      \node[anchor=south east,inner sep=0] at
+        ([xshift=-\uel@margin,yshift=\uel@margin]current page.south east)
+        {\uel@logo[height=.8cm]{vertical-abreviada-branca}};
+      % The second line keeps the section-page colour (white): the dark theme's
+      % muted subtitle colour is too dark on green.
+      \node[anchor=west,inner sep=0,text width=.72\paperwidth,align=left] at
+        ([xshift=\uel@margin]current page.west) {%
+        \usebeamercolor[fg]{section page}%
+        {\usebeamerfont{section page}Obrigado!\par}%
+        \ifx\relax#1\relax\else\vskip1.5ex{\usebeamerfont{subtitle}#1\par}\fi
+      };
+    \end{tikzpicture}
+  \end{frame}}
 
 % --- Table of contents ---------------------------------------------------------
 \setbeamertemplate{section in toc}{%

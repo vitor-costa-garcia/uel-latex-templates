@@ -55,6 +55,10 @@ latexmk exemplo-dark.tex     # tema escuro, gera exemplo-dark.pdf
 Use `\maketitle` para o slide de título e defina as formas curtas do rodapé com
 `\title[curto]{...}` e `\author[curto]{...}`.
 
+Para encerrar, `\obrigado` cria um slide verde no estilo dos separadores de
+seção, com "Obrigado!" e uma linha opcional: `\obrigado[Perguntas?]` ou
+`\obrigado[nome@uel.br]`.
+
 | Opção | Efeito |
 |---|---|
 | `fontpath=<pasta>` | pasta com os arquivos `.ttf` da Faustina |
