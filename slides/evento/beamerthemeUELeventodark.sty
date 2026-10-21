@@ -1,0 +1,13 @@
+% Dark variant of the UEL event theme: loads UELevento with the `dark` option and
+% forwards the other options.
+\ProvidesPackage{beamerthemeUELeventodark}[2026/10/21 UEL event beamer theme (dark)]
+\mode<presentation>
+
+\DeclareOptionBeamer{fontpath}{\PassOptionsToPackage{fontpath={#1}}{beamerthemeUELevento}}
+\DeclareOptionBeamer{logopath}{\PassOptionsToPackage{logopath={#1}}{beamerthemeUELevento}}
+\DeclareOptionBeamer{nodc}{\PassOptionsToPackage{nodc}{beamerthemeUELevento}}
+\ProcessOptionsBeamer
+\PassOptionsToPackage{dark}{beamerthemeUELevento}
+\usetheme{UELevento}
+
+\mode<all>

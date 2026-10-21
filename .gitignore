@@ -9,4 +9,4 @@
 *.fdb_latexmk
 *.xdv
 *.synctex.gz
-exemplo.pdf
+exemplo*.pdf

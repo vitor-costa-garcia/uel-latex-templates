@@ -1,0 +1,62 @@
+% Color theme for the UEL dark beamer theme.
+% The background is a deep emerald derived from the hue of Verde UEL (#00753B),
+% not the manual's black, which read as too harsh on screen. The manual's Verde
+% UEL is kept for the section slides; a brighter green is used for shapes and a
+% mint tint for text accents, since Verde UEL itself is too dark on this
+% background. Blues and greys come from the Departamento de Computação logo; the
+% DC blue is lightened for text.
+\ProvidesPackage{beamercolorthemeUELauladark}[2026/10/21 UEL lecture color theme (dark)]
+\mode<presentation>
+
+\definecolor{uelgreen}{HTML}{00753B}      % manual: Verde UEL
+\definecolor{uelshape}{HTML}{0F8A4F}      % rules, bands, block titles
+\definecolor{uelgreenbright}{HTML}{7CE9B0}% text accents
+\definecolor{uelbg}{HTML}{0E3A2A}
+\definecolor{uelsurface}{HTML}{145139}
+\definecolor{uelline}{HTML}{2F6A52}
+\definecolor{uelink}{HTML}{F2F8F4}
+\definecolor{uelmuted}{HTML}{A9CDBB}
+\definecolor{uelneutral}{HTML}{3F6756}
+\definecolor{dcblue}{HTML}{3777BB}
+\definecolor{dcbluelight}{HTML}{8DB8E6}
+
+\setbeamercolor{normal text}{fg=uelink,bg=uelbg}
+\setbeamercolor{background canvas}{bg=uelbg}
+\setbeamercolor{structure}{fg=uelgreenbright}
+\setbeamercolor{alerted text}{fg=dcbluelight}
+\setbeamercolor{example text}{fg=uelgreenbright}
+\setbeamercolor{palette primary}{fg=white,bg=uelshape}
+
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=uelmuted}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamercolor{framesubtitle}{fg=uelmuted}
+\setbeamercolor{footline}{fg=uelmuted,bg=uelbg}
+\setbeamercolor{header}{fg=uelmuted}
+\setbeamercolor{discipline}{fg=uelgreenbright}
+\setbeamercolor{lecture}{fg=dcbluelight}
+\setbeamercolor{section number}{fg=white}
+\setbeamercolor{section page}{fg=white,bg=uelgreen}
+
+\setbeamercolor{block title}{fg=white,bg=uelshape}
+\setbeamercolor{block body}{fg=uelink,bg=uelsurface}
+\setbeamercolor{block title alerted}{fg=white,bg=uelneutral}
+\setbeamercolor{block body alerted}{fg=uelink,bg=uelsurface}
+\setbeamercolor{block title example}{fg=white,bg=dcblue}
+\setbeamercolor{block body example}{fg=uelink,bg=uelsurface}
+
+\setbeamercolor{item}{fg=uelgreenbright}
+\setbeamercolor{caption name}{fg=uelgreenbright}
+\setbeamercolor{bibliography entry author}{fg=uelink}
+\setbeamercolor{bibliography entry title}{fg=uelink}
+\setbeamercolor{bibliography entry note}{fg=uelmuted}
+\setbeamercolor{footnote}{fg=uelmuted}
+\hypersetup{colorlinks=true,linkcolor=,urlcolor=dcbluelight,citecolor=dcbluelight}
+
+% code listings
+\colorlet{uelcodebg}{uelsurface}
+\colorlet{uelcodekw}{uelgreenbright}
+\colorlet{uelcodecm}{uelmuted}
+\colorlet{uelcodestr}{dcbluelight}
+
+\mode<all>

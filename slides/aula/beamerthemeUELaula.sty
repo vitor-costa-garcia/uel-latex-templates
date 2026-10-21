@@ -1,0 +1,232 @@
+% Beamer theme for lectures (aulas) at the Universidade Estadual de Londrina
+% (UEL), with the Departamento de Computação (DC) logo. Header with the course
+% name, numbered theorem-like environments, an `exercicio` environment and a code
+% listing style. The same file builds the light and the dark variant; load it with
+% \usetheme{UELaula} or \usetheme{UELauladark}.
+%
+% Options:
+%   dark              dark variant (what UELauladark selects)
+%   fontpath=<dir>    where the bundled Faustina .ttf files live (default fonts/)
+%   logopath=<dir>    where the logo PDFs live (default img/logos/pdf/)
+%   nodc              leave out the DC logo (plain UEL slides)
+%   nosectionpage     no automatic divider slide at each \section
+%
+% Title slide data: \title, \subtitle, \author (the professor), \institute, plus
+%   \disciplina{Algoritmos e Estruturas de Dados}  \aula{5}  \semestre{2026/1}
+\ProvidesPackage{beamerthemeUELaula}[2026/10/21 UEL lecture beamer theme]
+\mode<presentation>
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\RequirePackage{listings}
+
+\newif\ifuel@dark
+\newif\ifuel@dc \uel@dctrue
+\newif\ifuel@sectionpage \uel@sectionpagetrue
+\def\uel@fontpath{fonts/}
+\def\uel@logopath{img/logos/pdf/}
+\DeclareOptionBeamer{dark}{\uel@darktrue}
+\DeclareOptionBeamer{fontpath}{\def\uel@fontpath{#1}}
+\DeclareOptionBeamer{logopath}{\def\uel@logopath{#1}}
+\DeclareOptionBeamer{nodc}{\uel@dcfalse}
+\DeclareOptionBeamer{nosectionpage}{\uel@sectionpagefalse}
+\ProcessOptionsBeamer
+
+\ifuel@dark\usecolortheme{UELauladark}\else\usecolortheme{UELaula}\fi
+\usefonttheme{UELaula}
+
+% --- Lecture data ----------------------------------------------------------------
+\def\uel@disciplina{}
+\def\uel@aula{}
+\def\uel@semestre{}
+\newcommand*\disciplina[1]{\def\uel@disciplina{#1}}
+\newcommand*\aula[1]{\def\uel@aula{#1}}
+\newcommand*\semestre[1]{\def\uel@semestre{#1}}
+
+% --- Logos ----------------------------------------------------------------
+\def\uel@logodir{}
+\@for\uel@dir:=\uel@logopath,img/logos/pdf/,../img/logos/pdf/,../../img/logos/pdf/\do{%
+  \ifx\uel@logodir\@empty
+    \IfFileExists{\uel@dir simbolo-cor.pdf}{\edef\uel@logodir{\uel@dir}}{}%
+  \fi}
+\ifx\uel@logodir\@empty
+  \PackageError{beamerthemeUELaula}{Logo files not found}
+    {Copy img/logos/pdf/ next to your document or set the `logopath' option.}
+\fi
+\newcommand*\uel@logo[2][]{\includegraphics[#1]{\uel@logodir #2}}
+\ifuel@dark\def\uel@markname{simbolo-branco}\else\def\uel@markname{simbolo-cor}\fi
+% DC logo: plain on white; on a white plate when the page is dark (no negative
+% version exists). \uel@dclogo[<plate padding>]{<height>}
+\newcommand*\uel@dclogo[2][.12cm]{%
+  \ifuel@dark
+    \begingroup\setlength\fboxsep{#1}\colorbox{white}{\uel@logo[height=#2]{dc-cor}}\endgroup
+  \else
+    \uel@logo[height=#2]{dc-cor}%
+  \fi}
+
+% --- Layout ----------------------------------------------------------------
+\newlength\uel@margin
+\setlength\uel@margin{1cm}
+\newlength\uel@hw
+\setbeamersize{text margin left=\uel@margin,text margin right=\uel@margin}
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{itemize item}{\rule[.1ex]{.6ex}{.6ex}}
+\setbeamertemplate{itemize subitem}{\rule[.1ex]{.45ex}{.45ex}}
+\setbeamertemplate{itemize subsubitem}{\rule[.1ex]{.35ex}{.35ex}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{blocks}[default]
+
+% Header: course name on the left, logos on the right, hairline below.
+% \textwidth is the full page width inside head- and footline: use \uel@hw.
+\setbeamertemplate{headline}{%
+  \setlength\uel@hw{\dimexpr\paperwidth-2\uel@margin\relax}%
+  \vbox{%
+    \vskip1.4ex
+    \hbox to\paperwidth{\hspace*{\uel@margin}%
+      \hbox to\uel@hw{%
+        \usebeamerfont{header}\usebeamercolor[fg]{header}\MakeUppercase{\uel@disciplina}\hfil
+        \uel@logo[height=.5cm]{\uel@markname}%
+        \ifuel@dc\hspace{.2cm}\uel@dclogo[.05cm]{.4cm}\fi}\hss}%
+    \vskip.9ex
+    \hbox to\paperwidth{\hspace*{\uel@margin}{\color{uelline}\rule{\uel@hw}{.4pt}}\hss}}%
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vbox{%
+    \vskip1.2ex
+    \hbox to\textwidth{%
+      \begin{minipage}[b][.8cm][b]{\textwidth}
+        \raggedright
+        \usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par
+        \ifx\insertframesubtitle\@empty\else
+          {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+        \fi
+      \end{minipage}}}%
+}
+
+% Footer: professor | section | lecture and page.
+\setbeamertemplate{footline}{%
+  \setlength\uel@hw{\dimexpr\paperwidth-2\uel@margin\relax}%
+  \vbox{%
+    \hbox to\paperwidth{\hspace*{\uel@margin}{\color{uelline}\rule{\uel@hw}{.4pt}}\hss}%
+    \vskip.9ex
+    \hbox to\paperwidth{\hspace*{\uel@margin}%
+      \hbox to\uel@hw{%
+        \hbox to.33\uel@hw{\usebeamerfont{footline}\usebeamercolor[fg]{footline}\insertshortauthor\hss}%
+        \hbox to.34\uel@hw{\hss\usebeamerfont{footline}\usebeamercolor[fg]{footline}\insertsection\hss}%
+        \hbox to.33\uel@hw{\hss\usebeamerfont{footline}\usebeamercolor[fg]{footline}%
+          \ifx\uel@aula\@empty\else Aula \uel@aula\enspace·\enspace\fi
+          \insertframenumber\,/\,\inserttotalframenumber}}\hss}%
+    \vskip1.1ex}%
+}
+
+% --- Title slide (\maketitle makes a plain frame, without header and footer) -------
+\renewcommand\maketitle{%
+  \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Verde UEL panel on the left, with the white symbol and the unit name
+    \fill[uelgreen] (current page.north west) rectangle
+      ([xshift=.36\paperwidth]current page.south west);
+    \node[anchor=north west,inner sep=0] at
+      ([xshift=\uel@margin,yshift=-\uel@margin]current page.north west)
+      {\uel@logo[height=2.4cm]{simbolo-branco}};
+    \node[anchor=south west,inner sep=0,text width=.3\paperwidth,align=left,
+          text=white,font=\sffamily\footnotesize] at
+      ([xshift=\uel@margin,yshift=\uel@margin]current page.south west) {%
+      \ifx\insertinstitute\@empty
+        Universidade Estadual de Londrina%
+      \else
+        \insertinstitute%
+      \fi};
+    % Lecture data on the right
+    \node[anchor=west,inner sep=0,text width=.52\paperwidth,align=left] at
+      ([xshift=.36\paperwidth+\uel@margin]current page.west) {%
+      \ifx\uel@disciplina\@empty\else
+        {\usebeamerfont{discipline}\usebeamercolor[fg]{discipline}\MakeUppercase{\uel@disciplina}\par}%
+        \vskip.6ex
+      \fi
+      \ifx\uel@aula\@empty\else
+        {\usebeamerfont{lecture}\usebeamercolor[fg]{lecture}Aula \uel@aula\par}%
+        \vskip1.4ex
+      \fi
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+      \ifx\insertsubtitle\@empty\else
+        \vskip1ex
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi
+      \vskip2.5ex
+      {\usebeamerfont{author}\usebeamercolor[fg]{normal text}\insertauthor\par}%
+      \ifx\uel@semestre\@empty\else
+        \vskip.4ex
+        {\usebeamerfont{date}\usebeamercolor[fg]{subtitle}\uel@semestre\par}%
+      \fi
+    };
+    \ifuel@dc
+      \node[anchor=south east,inner sep=0] at
+        ([xshift=-\uel@margin,yshift=\uel@margin]current page.south east)
+        {\uel@dclogo{1.1cm}};
+    \fi
+  \end{tikzpicture}%
+}
+
+% --- Section divider ---------------------------------------------------------
+\setbeamertemplate{section page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[uelgreen] (current page.north west) rectangle
+      ([xshift=.36\paperwidth]current page.south west);
+    \node[inner sep=0,text=white] at
+      ([xshift=.18\paperwidth]current page.west) {%
+      {\usebeamerfont{section number}\usebeamercolor[fg]{section number}\insertsectionnumber}};
+    \node[anchor=west,inner sep=0,text width=.52\paperwidth,align=left] at
+      ([xshift=.36\paperwidth+\uel@margin]current page.west) {%
+      \usebeamercolor[fg]{normal text}%
+      {\usebeamerfont{section page}\insertsection\par}};
+  \end{tikzpicture}%
+}
+\ifuel@sectionpage
+  \AtBeginSection[]{%
+    \begin{frame}[plain,noframenumbering]
+      \sectionpage
+    \end{frame}}
+\fi
+
+% --- Theorem-like environments and exercises ----------------------------------------
+% Beamer's theorem, definition, example, proof… use the block colors; number them.
+\setbeamertemplate{theorems}[numbered]
+\newcounter{uel@exercicio}
+\newenvironment{exercicio}[1][]{%
+  \stepcounter{uel@exercicio}%
+  \begin{exampleblock}{Exercício~\theuel@exercicio\ifx\relax#1\relax\else~(#1)\fi}%
+}{\end{exampleblock}}
+
+% --- Code listings (use inside \begin{frame}[fragile]) ------------------------------
+\lstdefinestyle{uelcode}{%
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{uelcodebg},
+  keywordstyle=\color{uelcodekw}\bfseries,
+  commentstyle=\color{uelcodecm}\itshape,
+  stringstyle=\color{uelcodestr},
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  xleftmargin=.4em,xrightmargin=.4em,
+  aboveskip=.6ex,belowskip=.6ex}
+\lstset{style=uelcode}
+
+% --- Table of contents -------------------------------------------------------------
+\setbeamertemplate{section in toc}{%
+  \leavevmode\usebeamercolor[fg]{structure}\bfseries\inserttocsectionnumber.\ %
+  \usebeamercolor[fg]{normal text}\inserttocsection\par}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=1.4em\usebeamercolor[fg]{header}\small\inserttocsubsection\par}
+
+\mode<all>

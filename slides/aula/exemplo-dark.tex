@@ -1,0 +1,83 @@
+\documentclass[aspectratio=169,10pt,brazil]{beamer}
+\usepackage[brazil]{babel}
+
+\usetheme{UELauladark}
+
+\title[Busca binária]{Busca binária}
+\subtitle{Procurando em listas ordenadas}
+\author[Prof. Nome do Professor]{Prof. Dr. Nome do Professor}
+\institute{Departamento de Computação\\Universidade Estadual de Londrina}
+\disciplina{Algoritmos e Estruturas de Dados}
+\aula{5}
+\semestre{2026/1}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\section{Ideia}
+
+\begin{frame}{Dividir para conquistar}{Metade do trabalho a cada passo}
+  \begin{itemize}
+    \item Compare a chave com o elemento do \alert{meio}
+    \item Descarte a metade que não pode conter a chave
+    \item Repita na metade restante
+  \end{itemize}
+\end{frame}
+
+\section{Análise}
+
+\begin{frame}{Definição e teorema}
+  \begin{definition}
+    Uma lista $A[1..n]$ é \emph{ordenada} se $A[i] \le A[i+1]$ para todo $i < n$.
+  \end{definition}
+  \begin{theorem}
+    A busca binária faz no máximo $\lfloor \log_2 n \rfloor + 1$ comparações.
+  \end{theorem}
+  \begin{proof}
+    A cada passo o intervalo de busca cai pela metade, e $n$ só pode ser dividido
+    por 2 $\lfloor \log_2 n \rfloor$ vezes antes de chegar a 1.
+  \end{proof}
+\end{frame}
+
+\begin{frame}[fragile]{Implementação}
+\begin{lstlisting}[language=Python]
+def busca_binaria(a, chave):
+    lo, hi = 0, len(a) - 1
+    while lo <= hi:
+        meio = (lo + hi) // 2      # ponto médio
+        if a[meio] == chave:
+            return meio
+        if a[meio] < chave:
+            lo = meio + 1
+        else:
+            hi = meio - 1
+    return -1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Exercícios}
+  \begin{exercicio}
+    Execute a busca binária pela chave 23 em $[2, 5, 8, 12, 16, 23, 38]$ e anote
+    cada comparação.
+  \end{exercicio}
+  \begin{exercicio}[difícil]
+    Mostre que o ponto médio $\lfloor (lo + hi)/2 \rfloor$ nunca sai de $[lo, hi]$.
+  \end{exercicio}
+\end{frame}
+
+\begin{frame}{Comparação}
+  \centering
+  \begin{tabular}{lrr}
+    \hline
+    Método & Pior caso & Pré-condição \\ \hline
+    Linear & $n$ & nenhuma \\
+    Binária & $\log_2 n$ & lista ordenada \\ \hline
+  \end{tabular}
+\end{frame}
+
+\end{document}

@@ -4,41 +4,43 @@ Modelos não oficiais de slides em Beamer para a Universidade Estadual de Londri
 (UEL), seguindo o [manual de identidade visual](docs/identitymanual.pdf): Verde
 UEL, logotipos oficiais, Faustina nos títulos e Lato no texto. Todos os modelos
 trazem também o logotipo do Departamento de Computação (DC), que pode ser
-desligado.
+desligado, e existem em versão **clara** e **escura**.
 
 ## Modelos
 
-| Modelo | Aparência | Para quê |
-|---|---|---|
-| [`beamer-uel`](beamer-uel/) | slides brancos, bloco verde no título | palestras, aulas, seminários |
-| [`beamer-uel-dark`](beamer-uel-dark/) | slides em verde-esmeralda escuro | salas com pouca luz, telas |
-| [`beamer-uel-defesa`](beamer-uel-defesa/) | branco, discreto, com barra de progresso | defesas de TCC |
-| [`beamer-uel-defesa-dark`](beamer-uel-defesa-dark/) | o mesmo, em esmeralda escuro | defesas de TCC, salas com pouca luz |
+Cada pasta de [`slides/`](slides/) reúne um tipo de apresentação, com o tema claro
+e o escuro lado a lado.
 
-Os modelos de defesa acrescentam `\orientador`, `\banca` e `\curso` ao slide de
-título, uma barra de progresso acima do rodapé para acompanhar o tempo, um slide
-final (`\obrigado`) e não têm slides separadores de seção.
+| Pasta | Temas | Para quê |
+|---|---|---|
+| [`slides/geral`](slides/geral/) | `UEL`, `UELdark` | palestras, seminários, aulas simples |
+| [`slides/aula`](slides/aula/) | `UELaula`, `UELauladark` | aulas: disciplina no cabeçalho, teoremas, exercícios, código |
+| [`slides/defesa`](slides/defesa/) | `UELdefesa`, `UELdefesadark` | defesas de TCC, com barra de progresso, orientador e banca |
+| [`slides/evento`](slides/evento/) | `UELevento`, `UELeventodark` | eventos e extensão: palestrantes com foto e logotipos de apoio |
+
+O tema claro tem fundo branco; o escuro usa um verde-esmeralda escuro, bom para
+salas com pouca luz e para telas.
 
 ### Exemplos
 
-Cada modelo tem um exemplo, `exemplo.tex`, que mostra o slide de título e os
-tipos de slide mais comuns. A primeira imagem de cada linha é o slide de título.
+Cada pasta tem dois exemplos, `exemplo.tex` (claro) e `exemplo-dark.tex` (escuro).
+Em cada linha: título e conteúdo no tema claro, depois no escuro.
 
-| `beamer-uel` |
-|---|
-| <img src="beamer-uel/previews/title.png" width="330"> <img src="beamer-uel/previews/blocos.png" width="330"> |
+**`geral`**
 
-| `beamer-uel-dark` |
-|---|
-| <img src="beamer-uel-dark/previews/title.png" width="330"> <img src="beamer-uel-dark/previews/blocos.png" width="330"> |
+<img src="slides/geral/previews/title.png" width="215"> <img src="slides/geral/previews/blocos.png" width="215"> <img src="slides/geral/previews/dark-title.png" width="215"> <img src="slides/geral/previews/dark-blocos.png" width="215">
 
-| `beamer-uel-defesa` |
-|---|
-| <img src="beamer-uel-defesa/previews/title.png" width="330"> <img src="beamer-uel-defesa/previews/resultados.png" width="330"> |
+**`aula`**
 
-| `beamer-uel-defesa-dark` |
-|---|
-| <img src="beamer-uel-defesa-dark/previews/title.png" width="330"> <img src="beamer-uel-defesa-dark/previews/resultados.png" width="330"> |
+<img src="slides/aula/previews/title.png" width="215"> <img src="slides/aula/previews/teorema.png" width="215"> <img src="slides/aula/previews/dark-title.png" width="215"> <img src="slides/aula/previews/dark-teorema.png" width="215">
+
+**`defesa`**
+
+<img src="slides/defesa/previews/title.png" width="215"> <img src="slides/defesa/previews/resultados.png" width="215"> <img src="slides/defesa/previews/dark-title.png" width="215"> <img src="slides/defesa/previews/dark-resultados.png" width="215">
+
+**`evento`**
+
+<img src="slides/evento/previews/title.png" width="215"> <img src="slides/evento/previews/conteudo.png" width="215"> <img src="slides/evento/previews/dark-title.png" width="215"> <img src="slides/evento/previews/dark-conteudo.png" width="215">
 
 ## Requisitos
 
@@ -57,18 +59,19 @@ tipos de slide mais comuns. A primeira imagem de cada linha é o slide de títul
 
    ```sh
    git clone <este repositório>
-   cd uel-latex-templates/beamer-uel
-   latexmk exemplo.tex        # gera exemplo.pdf
+   cd uel-latex-templates/slides/geral
+   latexmk exemplo.tex          # gera exemplo.pdf (tema claro)
+   latexmk exemplo-dark.tex     # gera exemplo-dark.pdf (tema escuro)
    ```
 
-2. Comece a sua apresentação copiando a pasta do modelo para junto de `fonts/` e
-   `img/`, para que o tema as encontre:
+2. Comece a sua apresentação copiando a pasta do tipo escolhido para dentro de
+   `slides/`, para que o tema encontre `fonts/` e `img/`:
 
    ```sh
-   cd uel-latex-templates
-   cp -r beamer-uel minha-apresentacao
-   cd minha-apresentacao
-   mv exemplo.tex slides.tex  # opcional
+   cd uel-latex-templates/slides
+   cp -r aula minha-aula
+   cd minha-aula
+   mv exemplo.tex slides.tex    # o exemplo claro, ou exemplo-dark.tex para o escuro
    ```
 
 3. Edite o `slides.tex` e compile:
@@ -79,7 +82,7 @@ tipos de slide mais comuns. A primeira imagem de cada linha é o slide de títul
    latexmk -pvc slides.tex           # recompila a cada alteração do arquivo
    ```
 
-   O slide de título posiciona os logotipos com TikZ, o que exige duas
+   Os slides de título posicionam os logotipos com TikZ, o que exige duas
    compilações; o `latexmk` faz as duas. Se um logotipo ou o layout do título
    parecer errado depois de uma única execução do `xelatex`, execute-o de novo.
 
@@ -91,7 +94,7 @@ Uma apresentação mínima:
 \documentclass[aspectratio=169,10pt]{beamer}
 \usepackage[brazil]{babel}
 
-\usetheme{UEL}                 % ou UELdark, UELdefesa, UELdefesadark
+\usetheme{UEL}                 % claro; UELdark para o escuro
 
 \title[Título curto]{Título da apresentação}   % [forma curta] aparece no rodapé
 \subtitle{Subtítulo, se houver}
@@ -107,7 +110,7 @@ Uma apresentação mínima:
   \tableofcontents
 \end{frame}
 
-\section{Introdução}           % cria um slide separador automaticamente (não nos modelos de defesa)
+\section{Introdução}           % cria um slide separador automaticamente (não em defesa e evento)
 
 \begin{frame}{Um título de slide}{Subtítulo opcional}
   \begin{itemize}
@@ -119,12 +122,15 @@ Uma apresentação mínima:
 \end{document}
 ```
 
+Para trocar de claro para escuro (ou de tipo), basta mudar o nome em `\usetheme`:
+os dois temas de cada pasta têm os mesmos comandos.
+
 O que os temas estilizam e como usar:
 
 | Você escreve | Você obtém |
 |---|---|
 | `\begin{frame}{Título}{Subtítulo}` | título do slide, com subtítulo opcional |
-| `\section{…}`, `\tableofcontents` | slides separadores (não nos temas de defesa) e uma lista de conteúdo |
+| `\section{…}`, `\tableofcontents` | slides separadores (só em `geral` e `aula`) e uma lista de conteúdo |
 | `itemize`, `enumerate` | marcadores quadrados e numeração na cor de destaque do tema |
 | `\alert{…}` | ênfase em negrito, no azul do DC |
 | `block`, `alertblock`, `exampleblock` | blocos verde, cinza e azul |
@@ -132,27 +138,23 @@ O que os temas estilizam e como usar:
 | `\begin{frame}[fragile]` | necessário em volta de `verbatim` e de listagens de código |
 | `\begin{frame}[plain]` | slide sem rodapé, para figuras que ocupam toda a largura |
 
+Cada tipo tem comandos próprios, descritos no README da sua pasta:
+
+| Pasta | Comandos próprios |
+|---|---|
+| `aula` | `\disciplina`, `\aula`, `\semestre`; ambientes `theorem`, `definition`, `exercicio`; listagens de código. Use `brazil` também como opção da classe para os nomes em português |
+| `defesa` | `\orientador`, `\banca`, `\curso`, `\obrigado` |
+| `evento` | `\evento`, `\datalocal`, `\palestrante`, `\apoio`, `\obrigado` |
+
 Dicas:
 
-- Os temas foram feitos para **16:9 e 10pt**; mantenha
-  `\documentclass[aspectratio=169,10pt]{beamer}`. O texto é menor que o padrão
-  do Beamer de propósito.
+- Os temas foram feitos para **16:9**, em **10pt**; mantenha
+  `\documentclass[aspectratio=169,10pt]{beamer}`. O texto é menor que o padrão do
+  Beamer de propósito.
 - Defina formas curtas com `\title[…]{…}` e `\author[…]{…}`; elas aparecem no
   rodapé, onde as formas longas não caberiam.
 - Coloque as figuras numa subpasta, como `figuras/`, e use `\includegraphics`.
   Para diagramas, prefira PDF ou SVG convertido para PDF em vez de PNG.
-- Numa defesa, defina os campos extras antes de `\maketitle` e termine com
-  `\obrigado[linha de contato]`:
-
-  ```latex
-  \usetheme{UELdefesa}
-  \orientador{Prof. Dr. Nome do Orientador}
-  \banca{Prof. Dr. Nome do Membro 2\\Profa. Dra. Nome do Membro 3}
-  \curso{Ciência da Computação}
-  % ...
-  \obrigado[nome.autor@exemplo.uel.br]
-  ```
-
 - Para todo o resto sobre slides, consulte o
   [guia do usuário do Beamer](https://ctan.org/pkg/beamer): os temas mudam apenas
   a aparência.
@@ -161,29 +163,30 @@ Dicas:
 
 Passe as opções ao tema, por exemplo `\usetheme[nodc,nowatermark]{UEL}`.
 
-| Opção | Efeito | Modelos |
+| Opção | Efeito | Pastas |
 |---|---|---|
-| `nodc` | omite o logotipo do DC, para slides apenas da UEL | todos |
-| `nowatermark` | sem o símbolo esmaecido nos slides de título e de seção | `beamer-uel`, `beamer-uel-dark` |
-| `nosectionpage` | sem o slide separador automático em cada `\section` | `beamer-uel`, `beamer-uel-dark` |
-| `noprogress` | sem a barra de progresso | modelos de defesa |
-| `fontpath=<pasta>` | onde estão os arquivos `.ttf` da Faustina, terminando com `/` | todos |
-| `logopath=<pasta>` | onde estão os PDFs dos logotipos, terminando com `/` | todos |
+| `nodc` | omite o logotipo do DC, para slides apenas da UEL | todas |
+| `nowatermark` | sem o símbolo esmaecido nos slides de título e de seção | `geral` |
+| `nosectionpage` | sem o slide separador automático em cada `\section` | `geral`, `aula` |
+| `noprogress` | sem a barra de progresso | `defesa` |
+| `fontpath=<pasta>` | onde estão os arquivos `.ttf` da Faustina, terminando com `/` | todas |
+| `logopath=<pasta>` | onde estão os PDFs dos logotipos, terminando com `/` | todas |
 
-O README de cada modelo lista todos os seus comandos.
+O README de cada pasta lista todos os seus comandos e opções.
 
 ## Usando um tema fora deste repositório
 
-Um tema procura `fonts/` e `img/logos/pdf/` na pasta do seu documento e na pasta
-acima dela. Qualquer uma destas configurações funciona:
+Um tema procura `fonts/` e `img/logos/pdf/` na pasta do seu documento e nas duas
+pastas acima dela. Qualquer uma destas configurações funciona:
 
-- **Copiar a pasta dentro do repositório**, como no início rápido. Não há mais
+- **Copiar a pasta para dentro de `slides/`**, como no início rápido. Não há mais
   nada a configurar.
-- **Copiar os arquivos para o seu projeto**: os três arquivos `.sty` do modelo,
-  mais `fonts/` e `img/logos/pdf/` deste repositório, ao lado do seu `.tex` (ou
-  uma pasta acima).
-- **Deixar o repositório onde está** e apontar para ele. Coloque a pasta do
-  modelo no `TEXINPUTS` (note o `//` e o `:` final) e informe os caminhos dos
+- **Copiar os arquivos para o seu projeto**: os arquivos `.sty` da pasta do tipo
+  escolhido (todos eles: os dois temas, as cores e as fontes), mais `fonts/` e
+  `img/logos/pdf/` deste repositório, ao lado do seu `.tex` (ou até duas pastas
+  acima).
+- **Deixar o repositório onde está** e apontar para ele. Coloque a pasta do tipo
+  escolhido no `TEXINPUTS` (note o `//` e o `:` final) e informe os caminhos dos
   recursos:
 
   ```latex
@@ -192,10 +195,10 @@ acima dela. Qualquer uma destas configurações funciona:
   ```
 
   ```sh
-  TEXINPUTS=/home/voce/uel-latex-templates/beamer-uel//: latexmk -xelatex slides.tex
+  TEXINPUTS=/home/voce/uel-latex-templates/slides/geral//: latexmk -xelatex slides.tex
   ```
 
-  Para não digitar o `TEXINPUTS`, copie os três arquivos `.sty` para
+  Para não digitar o `TEXINPUTS`, copie os arquivos `.sty` para
   `~/texmf/tex/latex/uel/` e mantenha as duas opções acima.
 
 ## Solução de problemas
@@ -208,22 +211,22 @@ acima dela. Qualquer uma destas configurações funciona:
 | aviso `Lato not found` | instale a Lato (veja Requisitos) |
 | Logotipos ou bloco do título fora do lugar | compile uma segunda vez (o `latexmk` faz isso) |
 | `verbatim` ou código dentro de um frame dá erro | adicione `[fragile]`: `\begin{frame}[fragile]` |
+| *Definition* e *Theorem* em inglês (`aula`) | passe `brazil` também como opção da classe: `\documentclass[…,brazil]{beamer}` |
 
 ## Estrutura do repositório
 
 ```
-beamer-uel/               uma pasta por modelo: tema (.sty), exemplo.tex, README
-beamer-uel-dark/
-beamer-uel-defesa/
-beamer-uel-defesa-dark/
+slides/
+  geral/ aula/ defesa/ evento/          uma pasta por tipo: temas claro e escuro (.sty),
+                                        exemplo.tex, exemplo-dark.tex, README, previews/
 fonts/                    Faustina (instâncias estáticas das fontes variáveis do Google Fonts)
 img/logos/                logotipos da UEL (eps/, png/ originais; pdf/ para o LaTeX) e do DC (dc/ SVGs)
 docs/                     o manual de identidade visual
 ```
 
-Os modelos escuros se afastam do manual de propósito: usam um fundo verde-esmeralda
+Os temas escuros se afastam do manual de propósito: usam um fundo verde-esmeralda
 escuro e verdes derivados, e o logotipo do DC fica sobre uma placa branca porque
-não tem versão negativa. O README de cada um diz exatamente o que é derivado.
+não tem versão negativa. O README da pasta `geral` diz exatamente o que é derivado.
 
 Estes modelos não são endossados pela UEL. Use os logotipos conforme as regras de
 identidade da universidade e consulte o manual antes de mudar a posição ou as

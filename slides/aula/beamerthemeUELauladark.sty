@@ -1,0 +1,14 @@
+% Dark variant of the UEL lecture theme: loads UELaula with the `dark` option and
+% forwards the other options.
+\ProvidesPackage{beamerthemeUELauladark}[2026/10/21 UEL lecture beamer theme (dark)]
+\mode<presentation>
+
+\DeclareOptionBeamer{fontpath}{\PassOptionsToPackage{fontpath={#1}}{beamerthemeUELaula}}
+\DeclareOptionBeamer{logopath}{\PassOptionsToPackage{logopath={#1}}{beamerthemeUELaula}}
+\DeclareOptionBeamer{nodc}{\PassOptionsToPackage{nodc}{beamerthemeUELaula}}
+\DeclareOptionBeamer{nosectionpage}{\PassOptionsToPackage{nosectionpage}{beamerthemeUELaula}}
+\ProcessOptionsBeamer
+\PassOptionsToPackage{dark}{beamerthemeUELaula}
+\usetheme{UELaula}
+
+\mode<all>

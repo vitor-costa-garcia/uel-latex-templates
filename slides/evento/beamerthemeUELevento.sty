@@ -1,0 +1,214 @@
+% Beamer theme for events, courses and outreach talks at the Universidade
+% Estadual de Londrina (UEL), with the Departamento de Computação (DC) logo.
+% The title slide has an event banner, speaker cards with optional photos, and a
+% row for partner logos. The same file builds the light and the dark variant;
+% load it with \usetheme{UELevento} or \usetheme{UELeventodark}.
+%
+% Options:
+%   dark              dark variant (what UELeventodark selects)
+%   fontpath=<dir>    where the bundled Faustina .ttf files live (default fonts/)
+%   logopath=<dir>    where the logo PDFs live (default img/logos/pdf/)
+%   nodc              leave out the DC logo (plain UEL slides)
+%
+% Title slide data: \title, \subtitle, plus
+%   \evento{Name of the event}        \datalocal{12 de março · Auditório X}
+%   \palestrante[photo.jpg]{Name}{Affiliation}   (repeat for each speaker)
+%   \apoio{<logos, e.g. \includegraphics[height=.7cm]{logo.pdf}>}
+% Closing slide: \obrigado[contact line]
+\ProvidesPackage{beamerthemeUELevento}[2026/10/21 UEL event beamer theme]
+\mode<presentation>
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+\newif\ifuel@dark
+\newif\ifuel@dc \uel@dctrue
+\def\uel@fontpath{fonts/}
+\def\uel@logopath{img/logos/pdf/}
+\DeclareOptionBeamer{dark}{\uel@darktrue}
+\DeclareOptionBeamer{fontpath}{\def\uel@fontpath{#1}}
+\DeclareOptionBeamer{logopath}{\def\uel@logopath{#1}}
+\DeclareOptionBeamer{nodc}{\uel@dcfalse}
+\ProcessOptionsBeamer
+
+\ifuel@dark\usecolortheme{UELeventodark}\else\usecolortheme{UELevento}\fi
+\usefonttheme{UELevento}
+
+% --- Event data ------------------------------------------------------------------
+\def\uel@evento{}
+\def\uel@datalocal{}
+\def\uel@speakers{}
+\def\uel@apoio{}
+\newcommand*\evento[1]{\def\uel@evento{#1}}
+\newcommand*\datalocal[1]{\def\uel@datalocal{#1}}
+\newcommand*\apoio[1]{\def\uel@apoio{#1}}
+% \palestrante[photo]{name}{affiliation}: appends a card to the title slide.
+\newcommand*\palestrante[3][]{%
+  \g@addto@macro\uel@speakers{\uel@card{#1}{#2}{#3}\hspace{1.1cm}}}
+% Circular photo with plain PGF: TikZ's `path picture` breaks when it is nested
+% inside the node that holds the title slide text.
+\newcommand*\uel@photo[1]{%
+  \pgfpicture
+    \pgfpathcircle{\pgfpoint{.55cm}{.55cm}}{.55cm}\pgfusepath{clip}
+    \pgftext[left,bottom]{\includegraphics[width=1.1cm,height=1.1cm]{#1}}%
+    \pgfusepath{discard}%
+  \endpgfpicture}
+\newcommand*\uel@card[3]{%
+  \hbox{%
+    \ifx\relax#1\relax\else
+      $\vcenter{\hbox{\uel@photo{#1}}}$\hspace{.25cm}%
+    \fi
+    $\vcenter{\hbox{\vbox{\hsize=4.4cm\raggedright
+      {\usebeamerfont{speaker}\usebeamercolor[fg]{speaker}#2\par}%
+      {\usebeamerfont{speaker info}\usebeamercolor[fg]{speaker info}#3\par}}}}$}}
+
+% --- Logos ----------------------------------------------------------------
+\def\uel@logodir{}
+\@for\uel@dir:=\uel@logopath,img/logos/pdf/,../img/logos/pdf/,../../img/logos/pdf/\do{%
+  \ifx\uel@logodir\@empty
+    \IfFileExists{\uel@dir simbolo-cor.pdf}{\edef\uel@logodir{\uel@dir}}{}%
+  \fi}
+\ifx\uel@logodir\@empty
+  \PackageError{beamerthemeUELevento}{Logo files not found}
+    {Copy img/logos/pdf/ next to your document or set the `logopath' option.}
+\fi
+\newcommand*\uel@logo[2][]{\includegraphics[#1]{\uel@logodir #2}}
+\ifuel@dark\def\uel@markname{simbolo-branco}\else\def\uel@markname{simbolo-cor}\fi
+% DC logo: plain on a white page; on a white plate on the banner and on a dark
+% page (it has no negative version). \uel@dcplate[<padding>]{<height>}
+\newcommand*\uel@dcplate[2][.1cm]{%
+  \begingroup\setlength\fboxsep{#1}\colorbox{white}{\uel@logo[height=#2]{dc-cor}}\endgroup}
+\newcommand*\uel@dcpage[2][.05cm]{%
+  \ifuel@dark\uel@dcplate[#1]{#2}\else\uel@logo[height=#2]{dc-cor}\fi}
+
+% --- Layout ----------------------------------------------------------------
+\newlength\uel@margin
+\setlength\uel@margin{1cm}
+\newlength\uel@hw
+\setbeamersize{text margin left=\uel@margin,text margin right=\uel@margin}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+\setbeamertemplate{itemize item}{\rule[.1ex]{.6ex}{.6ex}}
+\setbeamertemplate{itemize subitem}{\rule[.1ex]{.45ex}{.45ex}}
+\setbeamertemplate{itemize subsubitem}{\rule[.1ex]{.35ex}{.35ex}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{blocks}[default]
+
+% Frame title: a vertical mark, the title, and the logos on the right.
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vbox{%
+    \vskip1.4ex
+    \hbox to\textwidth{%
+      {\color{uelmark}\rule[-.1cm]{.16cm}{.85cm}}\hspace{.3cm}%
+      \begin{minipage}[c][.75cm][c]{\dimexpr\textwidth-.46cm-2.4cm\relax}
+        \raggedright
+        \usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par
+        \ifx\insertframesubtitle\@empty\else
+          {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+        \fi
+      \end{minipage}\hfil
+      \uel@logo[height=.7cm]{\uel@markname}%
+      \ifuel@dc\hspace{.25cm}\uel@dcpage{.7cm}\fi}}%
+}
+
+% Footer bar: event | short title | page. \textwidth is the full page width here.
+\setbeamertemplate{footline}{%
+  \setlength\uel@hw{\dimexpr\paperwidth-2\uel@margin\relax}%
+  \leavevmode\hbox{%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.4ex,dp=1.1ex,leftskip=\uel@margin]{footline}
+      \usebeamerfont{footline}\uel@evento
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.32\paperwidth,ht=2.4ex,dp=1.1ex,center]{footline}
+      \usebeamerfont{footline}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.4ex,dp=1.1ex,right,rightskip=\uel@margin]{footline}
+      \usebeamerfont{footline}\insertframenumber\,/\,\inserttotalframenumber
+    \end{beamercolorbox}}%
+}
+
+% --- Title slide -----------------------------------------------------------------
+\renewcommand\maketitle{%
+  \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}}
+
+% Event banner on top (logos in negative versions or on a plate), title and
+% speaker cards on the page, partner logos at the bottom.
+\newcommand*\uel@banner{%
+  \fill[uelbanner] (current page.north west) rectangle
+    ([yshift=-2.1cm]current page.north east);
+  \node[anchor=west,inner sep=0,text width=.55\paperwidth,align=left] at
+    ([xshift=\uel@margin,yshift=-1.05cm]current page.north west) {%
+    {\usebeamerfont{event}\usebeamercolor[fg]{event}\uel@evento\par}%
+    \ifx\uel@datalocal\@empty\else
+      \vskip.4ex
+      {\usebeamerfont{event info}\usebeamercolor[fg]{event info}\uel@datalocal\par}%
+    \fi};
+  \ifuel@dc
+    \node[anchor=east,inner sep=0] (uel@dcb) at
+      ([xshift=-\uel@margin,yshift=-1.05cm]current page.north east)
+      {\uel@dcplate[.07cm]{.75cm}};
+    \node[anchor=east,inner sep=0] at ([xshift=-.5cm]uel@dcb.west)
+      {\uel@logo[height=.85cm]{horizontal-branca}};
+  \else
+    \node[anchor=east,inner sep=0] at
+      ([xshift=-\uel@margin,yshift=-1.05cm]current page.north east)
+      {\uel@logo[height=.85cm]{horizontal-branca}};
+  \fi}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \uel@banner
+    \node[anchor=north west,inner sep=0,text width=.85\paperwidth,align=left] at
+      ([xshift=\uel@margin,yshift=-2.9cm]current page.north west) {%
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+      \ifx\insertsubtitle\@empty\else
+        \vskip1ex
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi};
+    \ifx\uel@speakers\@empty\else
+      \node[anchor=south west,inner sep=0,text width=.9\paperwidth,align=left] at
+        ([xshift=\uel@margin,yshift=2.1cm]current page.south west) {\uel@speakers};
+    \fi
+    \ifx\uel@apoio\@empty\else
+      \node[anchor=south west,inner sep=0,text width=.9\paperwidth,align=left] at
+        ([xshift=\uel@margin,yshift=.55cm]current page.south west) {%
+        {\usebeamerfont{partners}\usebeamercolor[fg]{partners}Realização e apoio\par}%
+        \vskip.6ex\usebeamercolor[fg]{normal text}\uel@apoio};
+    \fi
+  \end{tikzpicture}%
+}
+
+% --- Closing slide -----------------------------------------------------------------
+\newcommand*\obrigado[1][]{%
+  \begin{frame}[plain,noframenumbering]
+    \begin{tikzpicture}[remember picture,overlay]
+      \uel@banner
+      \node[anchor=west,inner sep=0,text width=.85\paperwidth,align=left] at
+        ([xshift=\uel@margin,yshift=.2cm]current page.west) {%
+        {\usebeamerfont{title}\usebeamercolor[fg]{thanks}Obrigado!\par}%
+        \ifx\relax#1\relax\else
+          \vskip2ex{\usebeamerfont{speaker info}\usebeamercolor[fg]{speaker info}#1\par}%
+        \fi};
+      \ifx\uel@apoio\@empty\else
+        \node[anchor=south west,inner sep=0,text width=.9\paperwidth,align=left] at
+          ([xshift=\uel@margin,yshift=.55cm]current page.south west) {%
+          {\usebeamerfont{partners}\usebeamercolor[fg]{partners}Realização e apoio\par}%
+          \vskip.6ex\usebeamercolor[fg]{normal text}\uel@apoio};
+      \fi
+    \end{tikzpicture}
+  \end{frame}}
+
+% --- Table of contents -------------------------------------------------------------
+\setbeamertemplate{section in toc}{%
+  \leavevmode\usebeamercolor[fg]{structure}\bfseries\inserttocsectionnumber.\ %
+  \usebeamercolor[fg]{normal text}\inserttocsection\par}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=1.4em\usebeamercolor[fg]{speaker info}\small\inserttocsubsection\par}
+
+\mode<all>
