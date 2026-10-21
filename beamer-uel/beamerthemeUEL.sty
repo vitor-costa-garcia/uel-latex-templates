@@ -1,0 +1,186 @@
+% Beamer theme for the Universidade Estadual de Londrina (UEL), with the
+% Departamento de Computação (DC) logo. Visual identity follows the "Manual de
+% identidade visual da UEL".
+%
+% Options:
+%   fontpath=<dir>    where the bundled Faustina .ttf files live (default fonts/)
+%   logopath=<dir>    where the logo PDFs live (default img/logos/pdf/)
+%   nodc              leave out the DC logo (plain UEL slides)
+%   nowatermark       no translucent symbol on the title and section slides
+%   nosectionpage     no automatic divider slide at each \section
+\ProvidesPackage{beamerthemeUEL}[2026/10/20 UEL beamer theme]
+\mode<presentation>
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+\newif\ifuel@dc \uel@dctrue
+\newif\ifuel@watermark \uel@watermarktrue
+\newif\ifuel@sectionpage \uel@sectionpagetrue
+\def\uel@fontpath{fonts/}
+\def\uel@logopath{img/logos/pdf/}
+\DeclareOptionBeamer{fontpath}{\def\uel@fontpath{#1}}
+\DeclareOptionBeamer{logopath}{\def\uel@logopath{#1}}
+\DeclareOptionBeamer{nodc}{\uel@dcfalse}
+\DeclareOptionBeamer{nowatermark}{\uel@watermarkfalse}
+\DeclareOptionBeamer{nosectionpage}{\uel@sectionpagefalse}
+\ProcessOptionsBeamer
+
+\usecolortheme{UEL}
+\usefonttheme{UEL}
+
+% --- Logos ----------------------------------------------------------------
+% Find the logo directory the same way fonts are found.
+\def\uel@logodir{}
+\@for\uel@dir:=\uel@logopath,img/logos/pdf/,../img/logos/pdf/\do{%
+  \ifx\uel@logodir\@empty
+    \IfFileExists{\uel@dir simbolo-cor.pdf}{\edef\uel@logodir{\uel@dir}}{}%
+  \fi}
+\ifx\uel@logodir\@empty
+  \PackageError{beamerthemeUEL}{Logo files not found}
+    {Copy img/logos/pdf/ next to your document or set the `logopath' option.}
+\fi
+% \uel@logo[<includegraphics options>]{<name>}
+\newcommand*\uel@logo[2][]{\includegraphics[#1]{\uel@logodir #2}}
+
+% --- Layout ----------------------------------------------------------------
+\newlength\uel@margin
+\setlength\uel@margin{.9cm}
+\setbeamersize{text margin left=\uel@margin,text margin right=\uel@margin}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+\setbeamertemplate{itemize item}{\rule[.1ex]{.6ex}{.6ex}}
+\setbeamertemplate{itemize subitem}{\rule[.1ex]{.45ex}{.45ex}}
+\setbeamertemplate{itemize subsubitem}{\rule[.1ex]{.35ex}{.35ex}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{blocks}[default]
+
+% Frame title: Faustina on the left, small logos on the right, thin green rule.
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vbox{%
+    \vskip1ex
+    \hbox to\textwidth{%
+      \begin{minipage}[c][.8cm][c]{\dimexpr\textwidth-2.2cm\relax}
+        \raggedright
+        \usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par
+        \ifx\insertframesubtitle\@empty\else
+          {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+        \fi
+      \end{minipage}\hfil
+      \uel@logo[height=.8cm]{simbolo-cor}%
+      \ifuel@dc\hspace{.25cm}\uel@logo[height=.8cm]{dc-cor}\fi}%
+    \vskip.6ex
+    \hbox to\textwidth{\color{uelgreen}\rule{\textwidth}{.4pt}}}%
+}
+
+% Footer bar: author | short title | page.
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.2ex,dp=1ex,leftskip=\uel@margin]{footline}
+      \usebeamerfont{footline}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.2ex,dp=1ex,center]{footline}
+      \usebeamerfont{footline}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.2ex,dp=1ex,right,rightskip=\uel@margin]{footline}
+      \usebeamerfont{footline}\insertframenumber\,/\,\inserttotalframenumber
+    \end{beamercolorbox}}%
+}
+
+% --- Title slide (\maketitle makes a plain frame, without the footer) ---------
+% Green upper block with the title; white lower strip with author and logos.
+% The DC logo has no negative version, so logos stay on white.
+\renewcommand\maketitle{%
+  \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}}
+
+\newcommand*\uel@watermark{%
+  \ifuel@watermark
+    \begin{scope}[opacity=.1]
+      \node[anchor=south east,inner sep=0] at
+        ([xshift=.8cm,yshift=-1.2cm]current page.south east)
+        {\uel@logo[height=.8\paperheight]{simbolo-branco}};
+    \end{scope}
+  \fi}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \path let \p1=(current page.north west),\p2=(current page.south east) in
+      coordinate (uel@split) at (\x1,{\y1-.6*(\y1-\y2)});
+    \begin{scope}
+      \clip (current page.north west) rectangle (current page.east |- uel@split);
+      \fill[uelgreen] (current page.north west) rectangle (current page.east |- uel@split);
+      \uel@watermark
+    \end{scope}
+    \node[anchor=west,inner sep=0,text width=.72\paperwidth,align=left] at
+      ($(current page.north west)!.5!(uel@split)+(\uel@margin,0)$) {%
+      \usebeamercolor[fg]{title}%
+      {\usebeamerfont{title}\inserttitle\par}%
+      \ifx\insertsubtitle\@empty\else
+        \vskip1ex
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi
+    };
+    \node[anchor=north west,inner sep=0,text width=.5\paperwidth,align=left] at
+      ([xshift=\uel@margin,yshift=-.6cm]uel@split) {%
+      \usebeamercolor[fg]{normal text}%
+      {\usebeamerfont{author}\color{uelgreen}\insertauthor\par}%
+      \ifx\insertinstitute\@empty\else
+        \vskip.5ex
+        {\usebeamerfont{institute}\insertinstitute\par}%
+      \fi
+      \ifx\insertdate\@empty\else
+        \vskip.5ex
+        {\usebeamerfont{date}\color{dcgreydark}\insertdate\par}%
+      \fi
+    };
+    \ifuel@dc
+      \node[anchor=south east,inner sep=0] (uel@dcnode) at
+        ([xshift=-\uel@margin,yshift=.6cm]current page.south east)
+        {\uel@logo[height=1.5cm]{dc-cor}};
+      \node[anchor=east,inner sep=0] at ([xshift=-.7cm]uel@dcnode.west)
+        {\uel@logo[height=.8cm]{horizontal-cor}};
+    \else
+      \node[anchor=south east,inner sep=0] at
+        ([xshift=-\uel@margin,yshift=.6cm]current page.south east)
+        {\uel@logo[height=.9cm]{horizontal-cor}};
+    \fi
+  \end{tikzpicture}%
+}
+
+% --- Section divider ---------------------------------------------------------
+\setbeamertemplate{section page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[uelgreen] (current page.south west) rectangle (current page.north east);
+    \uel@watermark
+    \node[anchor=south east,inner sep=0] at
+      ([xshift=-\uel@margin,yshift=\uel@margin]current page.south east)
+      {\uel@logo[height=.8cm]{vertical-abreviada-branca}};
+    \node[anchor=west,inner sep=0,text width=.72\paperwidth,align=left] at
+      ([xshift=\uel@margin]current page.west) {%
+      \usebeamercolor[fg]{section page}%
+      {\usebeamerfont{section page}\insertsection\par}%
+    };
+  \end{tikzpicture}%
+}
+\ifuel@sectionpage
+  \AtBeginSection[]{%
+    \begin{frame}[plain,noframenumbering]
+      \sectionpage
+    \end{frame}}
+\fi
+
+% --- Table of contents ---------------------------------------------------------
+\setbeamertemplate{section in toc}{%
+  \leavevmode\color{uelgreen}\bfseries\inserttocsectionnumber.\ %
+  \color{uelblack}\inserttocsection\par}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=1.4em\color{dcgreydark}\small\inserttocsubsection\par}
+
+\mode<all>

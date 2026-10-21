@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="595.276pt"
+   height="841.89001pt"
+   viewBox="0 0 595.276 841.89"
+   id="svg2"
+   style="fill-rule:evenodd"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="LOGO-UEL.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1375"
+     inkscape:window-height="1005"
+     id="namedview3023"
+     showgrid="false"
+     inkscape:zoom="0.7649455"
+     inkscape:cx="372.04749"
+     inkscape:cy="630.76389"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata62">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4">
+    <marker
+       markerUnits="strokeWidth"
+       refX="0"
+       refY="5"
+       markerWidth="4"
+       markerHeight="3"
+       orient="auto"
+       viewBox="0 0 10 10"
+       id="ArrowEnd">
+      <path
+         d="M 0,0 10,5 0,10 z"
+         id="path7" />
+    </marker>
+    <marker
+       markerUnits="strokeWidth"
+       refX="10"
+       refY="5"
+       markerWidth="4"
+       markerHeight="3"
+       orient="auto"
+       viewBox="0 0 10 10"
+       id="ArrowStart">
+      <path
+         d="M 10,0 0,5 10,10 z"
+         id="path10" />
+    </marker>
+  </defs>
+  <path
+     d="m 170.329,31.605995 c 6.903,-0.452 13.745,2.192 18.099,7.415001 4.478,5.095 6.53,13.155001 4.913,20.119001 -1.803,7.287 -6.593,12.639001 -12.688,15.347001 -0.87,0.258 -1.306,0.645 -2.114,0.71 l -0.125,81.120002 -13.496,0 0.062,-81.185002 c -5.163,-2.515 -10.325,-6.835 -12.44,-12.768001 -2.114,-5.545 -2.052,-11.542001 0,-16.959001 2.675,-6.577 7.962,-11.478001 14.99,-13.283001 1.119,-0.194 1.866,-0.194 2.799,-0.516 z"
+     id="path20"
+     style="fill:#008000;stroke:none" />
+  <path
+     d="m 170.64,34.507995 c 6.281,-0.323 12.315,2.063001 16.295,7.222001 3.483,4.191 5.1,11.155001 3.545,16.959001 -1.181,5.61 -5.038,9.801001 -9.329,12.381001 -2.053,0.902 -3.981,1.612 -6.033,1.999 l -0.062,81.185002 -6.718,0 0.063,-81.185002 c -5.536,-2.064 -10.76,-5.481001 -13.062,-11.220001 -2.425,-5.74 -1.803,-12.381001 0.747,-17.476001 3.047,-5.029 7.463,-8.576001 13.248,-9.543001 l 1.306,-0.322 z"
+     id="path22"
+     style="fill:#008000;stroke:none" />
+  <path
+     d="m 147.503,120.082 15.362,0 0,10.317 -40.4898,0.065 -11.2575,-11.672 0,-46.750002 10.0136,-10.511001 -0.1244,58.229003 3.2342,0 0,-61.453003 9.5159,-9.866001 0,71.319004 2.488,0 0,-73.770004 11.444,-11.865001 -0.186,85.957005 z"
+     id="path24"
+     style="fill:#000000;stroke:none" />
+  <path
+     d="m 124.6765,133.366 38.1885,0 0,9.737 -28.921,0 -9.2675,-9.673 c 0,0 0,-0.064 0,-0.064 z"
+     id="path26"
+     style="fill:#000000;stroke:none" />
+  <path
+     d="m 136.556,146.069 26.122,0 0,10.253 -16.171,0.064 -9.951,-10.317 z"
+     id="path28"
+     style="fill:#000000;stroke:none" />
+  <path
+     d="m 195.979,33.940995 -0.063,86.021005 -15.113,0.064 -0.062,10.511 40.489,0 11.32,-11.801 0,-46.750002 -10.014,-10.511001 -0.062,58.358003 -3.047,-0.129 0,-61.453003 -9.516,-9.866001 -0.125,71.383004 -2.363,-0.064 0,-73.769004 -11.444,-11.994001 z"
+     id="path30"
+     style="fill:#000000;stroke:none" />
+  <path
+     d="m 180.741,133.31 0.062,9.93 28.672,0 9.392,-9.93 -38.126,0 z"
+     id="path32"
+     style="fill:#000000;stroke:none" />
+  <path
+     d="m 206.863,146.013 -26.122,0 0,10.253 16.233,-0.065 9.889,-10.188 z"
+     id="path34"
+     style="fill:#000000;stroke:none" />
+  <g
+     transform="translate(32.000002,-256.00001)"
+     id="g58" />
+</svg>

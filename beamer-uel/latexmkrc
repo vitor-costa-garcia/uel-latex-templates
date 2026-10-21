@@ -1,0 +1,3 @@
+# Build with XeLaTeX (the theme requires XeLaTeX or LuaLaTeX).
+$pdf_mode = 5;
+$xelatex = 'xelatex -interaction=nonstopmode -file-line-error %O %S';
